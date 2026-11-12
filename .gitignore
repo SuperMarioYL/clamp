@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.test-build/
+*.tsbuildinfo
+.DS_Store
+
+# Build scaffolding, not part of the project
+.build_metadata*
+.builder_*
+.spawn.*
