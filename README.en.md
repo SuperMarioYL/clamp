@@ -10,7 +10,7 @@ English | [简体中文](README.md)
 
 <a href="https://github.com/SuperMarioYL/clamp"><img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=20&duration=2600&pause=900&color=5B7CFA&center=true&vCenter=true&width=640&lines=correction+%E2%86%92+constraint+%E2%86%92+enforced;compile+once%2C+enforce+every+run" alt="correction to constraint to enforced" /></a>
 
-[![install](https://img.shields.io/badge/install-npx%20clamp-5B7CFA?style=flat-square&logo=npm&logoColor=white)](#install)
+[![install](https://img.shields.io/badge/install-github%3ASuperMarioYL%2Fclamp-5B7CFA?style=flat-square&logo=github&logoColor=white)](#install)
 [![node](https://img.shields.io/badge/node-%E2%89%A520-5B7CFA?style=flat-square&logo=nodedotjs&logoColor=white)](#install)
 [![CI](https://img.shields.io/github/actions/workflow/status/SuperMarioYL/clamp/ci.yml?style=flat-square&label=CI)](https://github.com/SuperMarioYL/clamp/actions/workflows/ci.yml)
 [![release](https://img.shields.io/badge/release-v0.1.0-5B7CFA?style=flat-square)](https://github.com/SuperMarioYL/clamp/releases)
@@ -88,12 +88,15 @@ Three git details that are easy to get wrong and are handled here:
 ## <img src="https://api.iconify.design/tabler/download.svg?color=%235B7CFA" width="20" alt="" /> Install
 
 ```sh
-# global install
-npm install -g clamp
+# install from GitHub (the shipping channel for v0.1.0)
+npm install -g github:SuperMarioYL/clamp
 
 # or run it without installing
-npx clamp init
+npx --yes github:SuperMarioYL/clamp init
 ```
+
+The bare npm name `clamp` belongs to an unrelated package; this project publishes as
+`@supermarioyl/clamp` (not yet on the registry — once it is, `npm i -g @supermarioyl/clamp` works).
 
 Requires Node.js ≥ 20 (CI covers 20 and 22), git, and macOS / Linux / WSL. Native Windows shells are outside what v0.1 guarantees.
 

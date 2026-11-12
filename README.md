@@ -10,7 +10,7 @@
 
 <a href="https://github.com/SuperMarioYL/clamp"><img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=20&duration=2600&pause=900&color=5B7CFA&center=true&vCenter=true&width=640&lines=correction+%E2%86%92+constraint+%E2%86%92+enforced;compile+once%2C+enforce+every+run" alt="correction to constraint to enforced" /></a>
 
-[![install](https://img.shields.io/badge/install-npx%20clamp-5B7CFA?style=flat-square&logo=npm&logoColor=white)](#安装)
+[![install](https://img.shields.io/badge/install-github%3ASuperMarioYL%2Fclamp-5B7CFA?style=flat-square&logo=github&logoColor=white)](#安装)
 [![node](https://img.shields.io/badge/node-%E2%89%A520-5B7CFA?style=flat-square&logo=nodedotjs&logoColor=white)](#安装)
 [![CI](https://img.shields.io/github/actions/workflow/status/SuperMarioYL/clamp/ci.yml?style=flat-square&label=CI)](https://github.com/SuperMarioYL/clamp/actions/workflows/ci.yml)
 [![release](https://img.shields.io/badge/release-v0.1.0-5B7CFA?style=flat-square)](https://github.com/SuperMarioYL/clamp/releases)
@@ -88,12 +88,14 @@ flowchart LR
 ## <img src="https://api.iconify.design/tabler/download.svg?color=%235B7CFA" width="20" alt="" /> 安装
 
 ```sh
-# 全局安装
-npm install -g clamp
+# 从 GitHub 安装（v0.1.0 的正式渠道）
+npm install -g github:SuperMarioYL/clamp
 
 # 或者不安装，直接用
-npx clamp init
+npx --yes github:SuperMarioYL/clamp init
 ```
+
+npm 上的 `clamp` 这个名字属于别的包，本项目的发布名是 `@supermarioyl/clamp`（尚未发布，发布后 `npm i -g @supermarioyl/clamp` 才可用）。
 
 需要 Node.js ≥ 20（CI 覆盖 20 与 22）、git、macOS / Linux / WSL。Windows 原生 shell 不在 v0.1 的保证范围内。
 
