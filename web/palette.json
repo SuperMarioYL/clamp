@@ -1,0 +1,38 @@
+{
+  "mode": "auto",
+  "id": "92e656-6ae778-e6f6ac-4368a840bf2c",
+  "identity": "https://github.com/supermarioyl/clamp",
+  "primary": "#92e656",
+  "secondary": "#6ae778",
+  "highlight": "#e6f6ac",
+  "dark": {
+    "bg": "#070c0d",
+    "panel": "#0f1717",
+    "code": "#0e1713",
+    "ink": "#fafdee",
+    "muted": "#a1b9a8",
+    "line": "#263c1d",
+    "primary": "#92e656",
+    "secondary": "#6ae778",
+    "highlight": "#e6f6ac",
+    "accent": "#92e656",
+    "buttonStart": "#538331",
+    "buttonEnd": "#3d8545",
+    "buttonText": "#ffffff"
+  },
+  "light": {
+    "bg": "#fbfef9",
+    "panel": "#fafef7",
+    "code": "#f7fdf3",
+    "ink": "#1b2a1c",
+    "muted": "#617a6b",
+    "line": "#def7cb",
+    "primary": "#528030",
+    "secondary": "#3c8244",
+    "highlight": "#707854",
+    "accent": "#528030",
+    "buttonStart": "#538331",
+    "buttonEnd": "#3d8545",
+    "buttonText": "#ffffff"
+  }
+}

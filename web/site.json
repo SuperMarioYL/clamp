@@ -1,0 +1,418 @@
+{
+  "schema": 3,
+  "name": "Clamp",
+  "github": "https://github.com/SuperMarioYL/clamp",
+  "palette": "auto",
+  "lang": {
+    "primary": "zh",
+    "toggle": true
+  },
+  "hero": {
+    "eyebrow": {
+      "zh": "纠正 → 约束 → 强制执行",
+      "en": "Correction → constraint → enforced"
+    },
+    "headline": {
+      "zh": "说过一次的错，\n不该再说第二次。",
+      "en": "A mistake you corrected once\nshould not come back."
+    },
+    "sub": {
+      "zh": "把一句口头纠正编译成一条检查：写文件之前看将要写入的文本，git commit 之前看整个工作区。同一句话，两个时刻各拦一次。",
+      "en": "Compile one sentence you said out loud into a check: the proposed text before a write, the whole worktree before a commit. The same claim, enforced at both moments."
+    },
+    "href": "#quickstart",
+    "cta": {
+      "zh": "开始使用",
+      "en": "Get started"
+    },
+    "ctaGithub": {
+      "zh": "在 GitHub 查看",
+      "en": "View on GitHub"
+    }
+  },
+  "advantages": [
+    {
+      "title": {
+        "zh": "不通过重放，就不写入",
+        "en": "No replay, no constraint"
+      },
+      "body": {
+        "zh": "compile 为一次纠正推出 span 正则、content_check 和一条取反的 tree_check，然后在三处重放里全过才落盘：坏版本必须触发（fires_on_bad）、修好的工作区必须通过（passes_on_good）、最近 40 个提交零误拦。少一处，.clamp/constraints/ 里就不会多出这个文件。",
+        "en": "For one correction, compile derives a span regex, a content_check and a negated tree_check, then has to pass three replays before it is written: the bad version must fire (fires_on_bad), the fixed worktree must pass (passes_on_good), and the last 40 commits must produce no false blocks. Miss one and nothing appears in .clamp/constraints/."
+      },
+      "chips": [
+        "fires_on_bad",
+        "passes_on_good",
+        "baseline 40"
+      ]
+    },
+    {
+      "title": {
+        "zh": "写之前与提交之前，各有一道闸",
+        "en": "One gate before the write, one before the commit"
+      },
+      "body": {
+        "zh": "PreToolUse 只拿得到将要写入的文本（tool_input.content 与 new_string）；pre-commit 只拿得到写完之后的工作区。每条约束因此同时带 content_check 和 tree_check，任一处命中都算失败。",
+        "en": "PreToolUse only sees the text about to be written (tool_input.content and new_string); pre-commit only sees the worktree after the write. Every constraint therefore carries both a content_check and a tree_check, and a hit on either one fails."
+      },
+      "chips": [
+        "PreToolUse",
+        "pre-commit",
+        "content_check + tree_check"
+      ]
+    },
+    {
+      "title": {
+        "zh": "找不到 CLI，就拒绝提交",
+        "en": "If the CLI is missing, the commit is refused"
+      },
+      "body": {
+        "zh": "init 把当时调用 CLI 的那条命令记进 hook，之后即使 clamp 不在 PATH 上，检查照样能跑。真找不到可执行文件时，hook 以失败关闭：拒绝这次提交，而不是悄悄跳过检查。",
+        "en": "init records the command that invoked the CLI into the hook, so the check still runs from a shell without clamp on PATH. When no executable can be found, the hook fails closed: it refuses the commit instead of quietly skipping the check."
+      },
+      "chips": [
+        "fails closed",
+        "recorded at init"
+      ]
+    },
+    {
+      "title": {
+        "zh": "坏状态留成一条 git ref",
+        "en": "The bad state is kept as a git ref"
+      },
+      "body": {
+        "zh": "fix 用临时索引把整个工作区快照下来，未跟踪文件也在内，写进 refs/clamp/bad/<id>，并立刻打印新增的行。",
+        "en": "fix snapshots the whole worktree through a temporary index, untracked files included, and stores it at refs/clamp/bad/<id>, printing the added lines right away."
+      },
+      "chips": [
+        "refs/clamp/bad/5eb0",
+        "untracked included"
+      ]
+    }
+  ],
+  "demo": {
+    "title": {
+      "zh": "记录下来的运行",
+      "en": "Recorded run"
+    },
+    "note": {
+      "zh": "下面的命令与输出逐字复制自 docs/demo-results.json：一个已有 40 个提交的临时仓库，Clamp v0.1.0 实跑。页面只呈现记录，不在浏览器里执行产品。",
+      "en": "The commands and output below are copied verbatim from docs/demo-results.json: a temporary repository with 40 commits, run against Clamp v0.1.0. This page presents the record; it does not execute the product in the browser."
+    },
+    "source": "https://github.com/SuperMarioYL/clamp/blob/main/docs/demo-results.json",
+    "steps": [
+      {
+        "label": {
+          "zh": "装上闸门",
+          "en": "Install the gate"
+        },
+        "body": {
+          "zh": "init 写出 .clamp/，在 git rev-parse --git-path hooks 解析出的目录里安装 pre-commit，并打印要粘进 Claude Code settings.json 的 PreToolUse 片段。",
+          "en": "init writes .clamp/, installs pre-commit into the directory git rev-parse --git-path hooks resolves, and prints the PreToolUse snippet to paste into Claude Code's settings.json."
+        },
+        "image": "/assets/demo-init-light.svg",
+        "imageDark": "/assets/demo-init-dark.svg",
+        "command": "clamp init",
+        "output": "Clamp v0.1.0 · wrote .clamp/\npre-commit  /private/tmp/clamp-site-demo-20261112/repo/.git/hooks/pre-commit\nClaude Code  add this to settings.json so writes are checked before they happen:\n{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"Write|Edit\",\n        \"hooks\": [\n          {\n            \"type\": \"command\",\n            \"command\": \"clamp hook pre-tool-use\"\n          }\n        ]\n      }\n    ]\n  }\n}"
+      },
+      {
+        "label": {
+          "zh": "记下坏工作区",
+          "en": "Record the bad worktree"
+        },
+        "body": {
+          "zh": "一个已跟踪文件被改成 toISOString()，另有一个未跟踪的 src/digest.ts。这次快照是 5eb0；4 条新增行里有一条来自未跟踪文件。",
+          "en": "One tracked file now uses toISOString(), and src/digest.ts is still untracked. This snapshot is 5eb0; one of the four added lines comes from the untracked file."
+        },
+        "image": "/assets/demo-fix-light.svg",
+        "imageDark": "/assets/demo-fix-dark.svg",
+        "command": "clamp fix --words \"时间别自己拼，统一用 formatDate\"",
+        "output": "snapshot refs/clamp/bad/5eb0 · 4 added lines\n  src/digest.ts:1  export function renderDigest(d: Date): string {\n  src/digest.ts:2  return \"Digest \" + d.toISOString();\n  src/digest.ts:3  }\n  src/report.ts:2  return \"Report \" + d.toISOString();\nafter fixing the code, run: clamp compile 5eb0"
+      },
+      {
+        "label": {
+          "zh": "编译并重放",
+          "en": "Compile and replay"
+        },
+        "body": {
+          "zh": "代码改对之后，compile 推出 span 正则、content_check 与取反的 tree_check，三处重放全过才写文件。--yes 跳过确认，供 CI 和脚本使用。",
+          "en": "After the code is fixed, compile derives the span regex, the content_check and the negated tree_check, and writes the file only after all three replays pass. --yes skips the prompt for CI and scripts."
+        },
+        "image": "/assets/demo-compile-light.svg",
+        "imageDark": "/assets/demo-compile-dark.svg",
+        "command": "clamp compile 5eb0 --yes",
+        "output": "candidate 0001-no-raw-toisostring  span  src/**/*.ts  /\\.toISOString\\(\\)/\ncontent_check  /\\.toISOString\\(\\)/  (PreToolUse, before the write)\ntree_check     git grep --untracked -nE '\\.toISOString\\(\\)' -- ':(glob)src/**/*.ts'  (expect: no_match, 30s)\nreplay    fires_on_bad yes · passes_on_good yes · baseline 40 commits · 0 blocks · 0 trigger hits\nwritten   .clamp/constraints/0001-no-raw-toisostring.yaml"
+      },
+      {
+        "label": {
+          "zh": "同一行再出现：提交被拦",
+          "en": "The line returns: the commit is stopped"
+        },
+        "body": {
+          "zh": "把 toISOString() 写回 src/digest.ts 再提交。pre-commit 打出约束 id、file:line 和失败的那条命令，以 exit 2 退出；git commit 因此返回 1，提交没有发生。",
+          "en": "Write toISOString() back into src/digest.ts and commit again. pre-commit prints the constraint id, file:line and the failing command, then exits 2; git commit therefore returns 1 and no commit is created."
+        },
+        "image": "/assets/demo-commit-light.svg",
+        "imageDark": "/assets/demo-commit-dark.svg",
+        "command": "git add -A && git commit -m \"feat: weekly digest\"",
+        "output": "0001-no-raw-toisostring  blocked  src/digest.ts:2:  return \"Digest \" + d.toISOString();\n  check failed: git grep --untracked -nE '\\.toISOString\\(\\)' -- ':(glob)src/**/*.ts'\nclamp: blocked the commit (exit 2) — 1 constraint(s) refused it.\nclamp: fix the offending lines, or run `clamp fix --words \"...\"` if the rule itself is wrong."
+      },
+      {
+        "label": {
+          "zh": "同一段文本：写入之前被拦",
+          "en": "The same text: stopped before the write"
+        },
+        "body": {
+          "zh": "把 Claude Code PreToolUse 的事件 JSON 从 stdin 交给 hook：它读 tool_input.content，命中 content_check 后以 exit 2 结束，写入不会发生。",
+          "en": "Feed the Claude Code PreToolUse event JSON to the hook on stdin: it reads tool_input.content, matches the content_check and exits 2, so the write never happens."
+        },
+        "image": "/assets/demo-pretool-light.svg",
+        "imageDark": "/assets/demo-pretool-dark.svg",
+        "command": "printf '%s\\n' '{\"tool_name\":\"Write\",\"cwd\":\"/tmp/clamp-site-demo-20261112/repo\",\"tool_input\":{\"file_path\":\"src/digest.ts\",\"content\":\"export function renderDigest(d: Date): string {\\n  return \\\"Digest \\\" + d.toISOString();\\n}\\n\"}}' | clamp hook pre-tool-use",
+        "output": "clamp: 0001-no-raw-toisostring  src/digest.ts:2  content_check /\\.toISOString\\(\\)/ matched \"return \"Digest \" + d.toISOString();\"\nclamp: blocked this write (exit 2) — 1 constraint refused it.\nclamp: rewrite the offending line, or record a new correction with `clamp fix --words \"...\"` and `clamp compile <id>`."
+      }
+    ]
+  },
+  "quickstart": {
+    "title": {
+      "zh": "从一次纠正到一条闸门",
+      "en": "From one correction to one gate"
+    },
+    "body": {
+      "zh": "需要 Node.js ≥ 20 与 git，在 macOS / Linux 上运行。按下面五步，在自己的仓库里走完同一条路径。",
+      "en": "Node.js ≥ 20 and git, on macOS or Linux. Five steps take the same path inside your own repository."
+    },
+    "steps": [
+      {
+        "title": {
+          "zh": "从源码构建并链接",
+          "en": "Build from source and link"
+        },
+        "code": "git clone https://github.com/SuperMarioYL/clamp.git\ncd clamp\nnpm ci\nnpm run build\nnpm link"
+      },
+      {
+        "title": {
+          "zh": "在你的仓库里装上闸门",
+          "en": "Install the gate in your repository"
+        },
+        "code": "cd /path/to/your-repo\nclamp init"
+      },
+      {
+        "title": {
+          "zh": "记录一次纠正",
+          "en": "Record one correction"
+        },
+        "code": "# the agent leaves the bad line behind, then you say what is wrong\nclamp fix --words \"时间别自己拼，统一用 formatDate\"\n# fix the code by hand, then compile the correction\nclamp compile 5eb0 --yes"
+      },
+      {
+        "title": {
+          "zh": "接上 Claude Code 的写入前检查",
+          "en": "Add the pre-write check in Claude Code"
+        },
+        "code": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"Write|Edit\",\n        \"hooks\": [{ \"type\": \"command\", \"command\": \"clamp hook pre-tool-use\" }]\n      }\n    ]\n  }\n}"
+      },
+      {
+        "title": {
+          "zh": "随时复查",
+          "en": "Re-check at any time"
+        },
+        "code": "clamp replay 0001\nclamp check\nclamp list"
+      }
+    ]
+  },
+  "limitations": [
+    {
+      "zh": "AST / tree-sitter 触发器不在 v0.1 里。",
+      "en": "AST and tree-sitter triggers are not part of v0.1."
+    },
+    {
+      "zh": "不做自动修复：被拦下的补丁要你自己改，Clamp 只负责拒绝。",
+      "en": "No automatic fixes: a blocked patch is yours to rewrite; Clamp only refuses it."
+    },
+    {
+      "zh": "判定不交给模型：LLM-as-judge 的裁决不在 v0.1 的范围内。",
+      "en": "No model decides the verdict: LLM-as-judge rulings are outside v0.1."
+    },
+    {
+      "zh": "不做约束冲突的自动解决。",
+      "en": "There is no automatic resolution of conflicting constraints."
+    },
+    {
+      "zh": "没有插件市场。",
+      "en": "There is no plugin marketplace."
+    },
+    {
+      "zh": "没有 Web UI、账号体系或多租户服务端；v0.1 是本地 CLI。",
+      "en": "No web UI, accounts or multi-tenant server; v0.1 is a local CLI."
+    },
+    {
+      "zh": "原生 Windows shell 不在 v0.1 的支持范围内。",
+      "en": "Native Windows shells are not supported by v0.1."
+    }
+  ],
+  "scene": {
+    "kind": "neon-graph",
+    "fallback": "/assets/scene-dark.svg",
+    "fallbackLight": "/assets/scene-light.svg",
+    "caption": {
+      "zh": "一句纠正被编译成约束，两道闸门在写入与提交之前各拦一次（示意图）",
+      "en": "One correction compiled into a constraint; two gates stop the same line before the write and before the commit (illustrative)"
+    }
+  },
+  "story": {
+    "intro": {
+      "title": {
+        "zh": "同一条错行，换了会话就回来了。",
+        "en": "The same wrong line comes back in the next session."
+      },
+      "body": {
+        "zh": "团队在 Claude Code 里干活，纠正一次就够了：你改掉一行，说一句“时间别自己拼，统一用 formatDate”，然后继续。第二天新会话在另一个文件里又写了 toISOString()。规则可以被写下来，但读到不等于做到。缺的不是再提醒一次，而是执行：在写入之前、提交之前，各有一个地方替你说这句话。",
+        "en": "A small team works in Claude Code and corrects something once: you fix one line, say “don't build dates by hand, use formatDate”, and move on. The next day a new session writes toISOString() again in another file. A rule can be written down, but reading it is not doing it. What is missing is not another reminder but enforcement: one place that says it for you before the write and before the commit."
+      }
+    },
+    "sections": [
+      {
+        "title": {
+          "zh": "一次纠正走完四个动作",
+          "en": "One correction, four steps"
+        },
+        "body": {
+          "zh": "fix 把当时的工作区做成快照，未跟踪文件也在内，写进 refs/clamp/bad/<id>，并打印新增的行。你把代码改对，compile 推出 span 正则、content_check 和一条取反的 tree_check。之后 replay 随时重跑这三道闸，check 跑全部约束，list 列出已有的约束。",
+          "en": "fix snapshots the worktree as it stands, untracked files included, stores it at refs/clamp/bad/<id> and prints the added lines. You fix the code, and compile derives a span regex, a content_check and a negated tree_check. After that, replay reruns the three gates at any time, check runs every constraint, and list shows what is stored."
+        },
+        "image": {
+          "light": "/assets/process-light.svg",
+          "dark": "/assets/process-dark.svg",
+          "alt": {
+            "zh": "四个串行动作：init 写出 .clamp/ 并安装 pre-commit；fix 把工作区快照进 refs/clamp/bad/5eb0；compile 推出 span 正则与两个检查，重放 fires_on_bad、passes_on_good、40 个提交基线；enforce 在 PreToolUse 与 pre-commit 各拦一次。旁边标出被拦下的坏行与不受影响的其他文件。",
+            "en": "Four steps in order: init writes .clamp/ and installs pre-commit; fix snapshots the worktree into refs/clamp/bad/5eb0; compile derives a span regex and two checks and replays fires_on_bad, passes_on_good and a 40-commit baseline; enforce stops the line at PreToolUse and at pre-commit. The blocked bad line and the untouched files are marked alongside."
+          },
+          "mobile": {
+            "light": "/assets/process-mobile-light.svg",
+            "dark": "/assets/process-mobile-dark.svg"
+          }
+        }
+      },
+      {
+        "title": {
+          "zh": "两道闸门，两个时刻",
+          "en": "Two gates, each with its own evidence"
+        },
+        "body": {
+          "zh": "PreToolUse 在写之前运行，手上只有将要写入的文本（Write 的 tool_input.content、Edit 的 tool_input.new_string）。pre-commit 在写完之后运行，手上只有工作区。所以每条约束同时带 content_check 和 tree_check，任一处命中都失败。",
+          "en": "PreToolUse runs before the write and holds the proposed text (Write's tool_input.content, Edit's tool_input.new_string). pre-commit runs after the write and holds the worktree. Every constraint therefore carries both a content_check and a tree_check, and a hit on either one fails."
+        },
+        "image": {
+          "light": "/assets/architecture-light.svg",
+          "dark": "/assets/architecture-dark.svg",
+          "alt": {
+            "zh": "约束文件的中心位置：坏快照、工作区与提交历史喂给 compile 和 replay；同一条约束同时供 PreToolUse 的 content_check（提出的文本）与 pre-commit 的 tree_check（工作区）使用，两个表面在命中时都以 exit 2 结束。",
+            "en": "The constraint file at the centre: the bad snapshot, the worktree and the commit history feed compile and replay; the same constraint supplies PreToolUse's content_check over proposed text and pre-commit's tree_check over the worktree, and both surfaces exit 2 on a hit."
+          },
+          "mobile": {
+            "light": "/assets/architecture-mobile-light.svg",
+            "dark": "/assets/architecture-mobile-dark.svg"
+          }
+        }
+      },
+      {
+        "title": {
+          "zh": "边界写在明处",
+          "en": "The boundaries are stated"
+        },
+        "body": {
+          "zh": "一个 TypeScript CLI：init、fix、compile、replay、check、list，加上两个 hook 入口。约束是 .clamp/constraints/ 下的 YAML，快照是 git ref，两者都跟着仓库进版本控制。团队层——托管的约束注册表与共享审计——是本地 CLI 之上的付费路径。",
+          "en": "One TypeScript CLI: init, fix, compile, replay, check, list, plus two hook entry points. Constraints are YAML under .clamp/constraints/ and snapshots are git refs, so both travel with the repository. The team layer — a hosted constraint registry and shared audit — is the paid path on top of the local CLI."
+        },
+        "image": {
+          "light": "/assets/capabilities-light.svg",
+          "dark": "/assets/capabilities-dark.svg",
+          "alt": {
+            "zh": "能力与边界：六个命令和两个 hook 入口围绕 .clamp/constraints/ 与 refs/clamp/bad/；左侧是本地能力，右侧虚线标出 v0.1 不做的事——AST 触发器、自动修复、LLM 裁决、自动合并冲突、插件市场、Web UI 与账号、原生 Windows。",
+            "en": "Capabilities and boundaries: six commands and two hook entry points around .clamp/constraints/ and refs/clamp/bad/; local capabilities on the left, and on the right a dashed boundary for what v0.1 does not do — AST triggers, auto-fix, LLM verdicts, automatic conflict resolution, a plugin marketplace, a web UI with accounts, and native Windows."
+          },
+          "mobile": {
+            "light": "/assets/capabilities-mobile-light.svg",
+            "dark": "/assets/capabilities-mobile-dark.svg"
+          }
+        }
+      },
+      {
+        "title": {
+          "zh": "同一次运行，两次拦下",
+          "en": "The same run, stopped twice"
+        },
+        "body": {
+          "zh": "在 40 个提交的临时仓库里，compile 的重放结果是 fires_on_bad yes、passes_on_good yes、baseline 0 blocks。随后把同一行 toISOString() 写回去：git commit 在 pre-commit 处被拦下，exit 2，打印约束 id、file:line 和失败的命令；把同样的文本交给 PreToolUse，则在写入之前就被拒绝。下面的 demo 是这场运行的逐字记录。",
+          "en": "In a temporary repository with 40 commits, compile replays as fires_on_bad yes, passes_on_good yes and a baseline of 0 blocks. Then the same toISOString() line comes back: git commit is stopped at pre-commit with exit 2, printing the constraint id, file:line and the failing command; the same text handed to PreToolUse is refused before the write. The demo below is the verbatim record of that run."
+        },
+        "image": {
+          "light": "/assets/demo-commit-light.svg",
+          "dark": "/assets/demo-commit-dark.svg",
+          "alt": {
+            "zh": "同一次运行里的两道拦截：pre-commit 打印 0001-no-raw-toisostring、src/digest.ts:2 与失败的 git grep 命令后以 exit 2 退出；PreToolUse 对同一段提出的文本以 exit 2 结束。两次都没有产生新的提交或文件写入。",
+            "en": "Two blocks from the same run: pre-commit prints 0001-no-raw-toisostring, src/digest.ts:2 and the failing git grep command, then exits 2; PreToolUse exits 2 on the same proposed text. Neither produced a new commit or a file write."
+          },
+          "mobile": {
+            "light": "/assets/demo-commit-mobile-light.svg",
+            "dark": "/assets/demo-commit-mobile-dark.svg"
+          }
+        }
+      }
+    ],
+    "details": [
+      {
+        "title": {
+          "zh": "约束文件",
+          "en": "The constraint file"
+        },
+        "body": {
+          "zh": "一条约束就是一个 YAML：claim 是你当时说的那句话（--words），trigger 记下 span 与 glob，content_check 与 tree_check 分别对应两个表面，provenance 记下坏快照与 diff 基线。version 会出现在 replay 的输出里，一条拦截日志因此能说清是哪一版规则拦的。",
+          "en": "A constraint is one YAML file: claim holds the sentence you said (--words), trigger records the span and glob, content_check and tree_check belong to the two surfaces, and provenance records the bad snapshot and the diff base. version appears in replay's output, so a block log can say which version stopped it."
+        },
+        "code": "id: 0001-no-raw-toisostring\nclaim: 时间别自己拼，统一用 formatDate\nenforcement: block\ntrigger:\n  kind: span\n  glob: src/**/*.ts\n  pattern: \\.toISOString\\(\\)\ncontent_check:\n  pattern: \\.toISOString\\(\\)\ntree_check:\n  cmd: git grep --untracked -nE '\\.toISOString\\(\\)' -- ':(glob)src/**/*.ts'\n  timeout_sec: 30\n  expect: no_match\nprovenance:\n  bad_ref: refs/clamp/bad/5eb0\n  good_ref: worktree\n  words: 时间别自己拼，统一用 formatDate\n  model: template\nversion: 783fc9b87f68"
+      },
+      {
+        "title": {
+          "zh": "两条检查各自读什么",
+          "en": "What each check reads"
+        },
+        "body": {
+          "zh": "tree_check 是一条取反的 git grep，命令里带 --untracked，expect 是 no_match。content_check 用同一个正则，跑在 hook 事件给出的文本上。init 打印的片段把后者接进 Claude Code；前者由 pre-commit 执行。",
+          "en": "tree_check is a negated git grep: the command carries --untracked and expect is no_match. content_check applies the same regex to the text in the hook event. The snippet init prints wires the second one into Claude Code; pre-commit runs the first one."
+        },
+        "code": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"Write|Edit\",\n        \"hooks\": [{ \"type\": \"command\", \"command\": \"clamp hook pre-tool-use\" }]\n      }\n    ]\n  }\n}"
+      },
+      {
+        "title": {
+          "zh": "团队层是另一条付费路径",
+          "en": "The team layer is a separate paid path"
+        },
+        "body": {
+          "zh": "v0.1 交付的是本地 CLI；付费路径是它之上的团队层：托管的约束注册表与共享审计，让同一条纠正在多个仓库之间保持一致。这是一个方向，不代表 v0.1 已经包含托管服务。",
+          "en": "v0.1 ships the local CLI; the paid path is the team layer on top of it: a hosted constraint registry and shared audit, so the same correction stays consistent across repositories. That is a direction, not something v0.1 already hosts."
+        }
+      }
+    ]
+  },
+  "cta": {
+    "headline": {
+      "zh": "把纠正留在\n下一次运行之前。",
+      "en": "Keep the correction\nbefore the next run."
+    },
+    "sub": {
+      "zh": "MIT 开源的本地 CLI：约束是仓库里的 YAML，快照是 git ref。",
+      "en": "An MIT-licensed local CLI: constraints are YAML in the repository, snapshots are git refs."
+    },
+    "button": {
+      "zh": "在 GitHub 上查看",
+      "en": "View on GitHub"
+    }
+  },
+  "footer": {
+    "tag": {
+      "zh": "MIT 开源 · 本地 CLI · 约束与快照都留在 git 里",
+      "en": "MIT open source · local CLI · constraints and snapshots stay in git"
+    }
+  }
+}

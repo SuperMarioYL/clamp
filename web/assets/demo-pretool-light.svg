@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="300" viewBox="0 0 760 300" role="img" aria-labelledby="demo-pretool-title demo-pretool-desc" data-palette="92e656-6ae778-e6f6ac-4368a840bf2c">
+<title id="demo-pretool-title">Clamp demo · clamp hook pre-tool-use</title>
+<desc id="demo-pretool-desc">clamp hook pre-tool-use: clamp: 0001-no-raw-toisostring  src/digest.ts:2 ·   content_check /\.toISOString\(\)/ matched · clamp: blocked this write (exit 2) · clamp: rewrite the offending line · reads tool_input.content / new_string</desc>
+<style>@media (prefers-reduced-motion:reduce){*{animation:none!important}.flow{display:none}}</style>
+<defs>
+<linearGradient id="brand" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#92e656"/><stop offset=".55" stop-color="#6ae778"/><stop offset="1" stop-color="#e6f6ac"/></linearGradient>
+<filter id="glow" x="-70%" y="-70%" width="240%" height="240%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<filter id="soft" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="18"/></filter>
+<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="m1 1 7 4-7 4" fill="none" stroke="#92e656" stroke-width="1.4"/></marker>
+</defs>
+<rect width="760" height="300" rx="18" fill="#fbfef9"/>
+<rect x="20" y="20" width="720" height="260" rx="16" fill="#f7fdf3" stroke="#def7cb" stroke-width="1"/>
+<rect x="20" y="20" width="720" height="34" rx="10" fill="#ffffff" stroke="#def7cb"/><circle cx="38" cy="37" r="4" fill="#528030" opacity="0.9"/><circle cx="54" cy="37" r="4" fill="#3c8244" opacity="0.8"/><circle cx="70" cy="37" r="4" fill="#707854" opacity="0.7"/><text x="88" y="42" xml:space="preserve" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="12.5" fill="#617a6b" font-weight="400" text-anchor="start" letter-spacing="0" opacity="1">clamp hook pre-tool-use</text>
+<text x="44" y="84" xml:space="preserve" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="11.5" fill="#1b2a1c" font-weight="400" text-anchor="start" letter-spacing="0" opacity="1">clamp: 0001-no-raw-toisostring  src/digest.ts:2</text>
+<text x="44" y="105.5" xml:space="preserve" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="11.5" fill="#617a6b" font-weight="400" text-anchor="start" letter-spacing="0" opacity="1">  content_check /\.toISOString\(\)/ matched</text>
+<text x="44" y="127" xml:space="preserve" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="11.5" fill="#528030" font-weight="600" text-anchor="start" letter-spacing="0" opacity="1">clamp: blocked this write (exit 2)</text>
+<text x="44" y="148.5" xml:space="preserve" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="11.5" fill="#617a6b" font-weight="400" text-anchor="start" letter-spacing="0" opacity="1">clamp: rewrite the offending line</text>
+<text x="44" y="170" xml:space="preserve" font-family="'Space Grotesk', -apple-system, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="11.5" fill="#1b2a1c" font-weight="400" text-anchor="start" letter-spacing="0" opacity="1">reads tool_input.content / new_string</text>
+<text x="44" y="260" xml:space="preserve" font-family="'Space Grotesk', -apple-system, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="10" fill="#617a6b" font-weight="400" text-anchor="start" letter-spacing="0" opacity="1">PreToolUse · before the write exists</text>
+</svg>

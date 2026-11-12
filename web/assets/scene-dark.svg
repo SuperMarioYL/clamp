@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-labelledby="scene-title scene-desc" data-palette="92e656-6ae778-e6f6ac-4368a840bf2c">
+<title id="scene-title">Clamp dark scene</title>
+<desc id="scene-desc">One correction compiled into a constraint; the constraint fans out to the pre-write check, the pre-commit check and the recorded history.</desc>
+<style>@media (prefers-reduced-motion:reduce){*{animation:none!important}.flow{display:none}}</style>
+<defs>
+<linearGradient id="brand" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#92e656"/><stop offset=".55" stop-color="#6ae778"/><stop offset="1" stop-color="#e6f6ac"/></linearGradient>
+<filter id="glow" x="-70%" y="-70%" width="240%" height="240%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<filter id="soft" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="18"/></filter>
+<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="m1 1 7 4-7 4" fill="none" stroke="#92e656" stroke-width="1.4"/></marker>
+</defs>
+<rect width="1200" height="900" rx="18" fill="#070c0d"/>
+<pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M50 0H0V50" fill="none" stroke="#263c1d" stroke-opacity=".5" stroke-width=".6"/></pattern><rect width="1200" height="900" rx="18" fill="url(#grid)"/>
+<circle cx="600" cy="460" r="330" fill="#92e656" opacity="0.05"/>
+<circle cx="600" cy="460" r="250" fill="#92e656" opacity="0.06"/>
+<path d="M600 460 Q 553.8 295 600 130" stroke="url(#brand)" stroke-width="1.6" fill="none" opacity="0.8"/>
+<circle cx="590.1" cy="354.4" r="3.2" fill="#e6f6ac" opacity="0.9"/>
+<circle cx="590.1" cy="268.6" r="3.2" fill="#e6f6ac" opacity="0.9"/>
+<circle cx="590.1" cy="196" r="3.2" fill="#e6f6ac" opacity="0.9"/>
+<path d="M600 460 Q 387.6 433.2 220 300" stroke="url(#brand)" stroke-width="1.6" fill="none" opacity="0.8"/>
+<circle cx="473.59999999999997" cy="420.2" r="3.2" fill="#e6f6ac" opacity="0.9"/>
+<circle cx="374.8" cy="378.59999999999997" r="3.2" fill="#e6f6ac" opacity="0.9"/>
+<circle cx="291.2" cy="343.4" r="3.2" fill="#e6f6ac" opacity="0.9"/>
+<path d="M600 460 Q 767.6 326.8 980 300" stroke="url(#brand)" stroke-width="1.6" fill="none" opacity="0.8"/>
+<circle cx="716.8000000000001" cy="397.40000000000003" r="3.2" fill="#e6f6ac" opacity="0.9"/>
+<circle cx="815.6" cy="355.8" r="3.2" fill="#e6f6ac" opacity="0.9"/>
+<circle cx="899.2" cy="320.6" r="3.2" fill="#e6f6ac" opacity="0.9"/>
+<path d="M600 460 Q 423 617.4 190 660" stroke="url(#brand)" stroke-width="1.6" fill="none" opacity="0.8"/>
+<circle cx="474.8" cy="536.3" r="3.2" fill="#e6f6ac" opacity="0.9"/>
+<circle cx="368.20000000000005" cy="588.3" r="3.2" fill="#e6f6ac" opacity="0.9"/>
+<circle cx="278" cy="632.3" r="3.2" fill="#e6f6ac" opacity="0.9"/>
+<path d="M600 460 Q 833 502.6 1010 660" stroke="url(#brand)" stroke-width="1.6" fill="none" opacity="0.8"/>
+<circle cx="737.2" cy="511.7" r="3.2" fill="#e6f6ac" opacity="0.9"/>
+<circle cx="843.8" cy="563.7" r="3.2" fill="#e6f6ac" opacity="0.9"/>
+<circle cx="934" cy="607.7" r="3.2" fill="#e6f6ac" opacity="0.9"/>
+<path d="M600 460 Q 647.6 630 600 800" stroke="url(#brand)" stroke-width="1.6" fill="none" opacity="0.8"/>
+<circle cx="610.2" cy="568.8" r="3.2" fill="#e6f6ac" opacity="0.9"/>
+<circle cx="610.2" cy="657.2" r="3.2" fill="#e6f6ac" opacity="0.9"/>
+<circle cx="610.2" cy="732" r="3.2" fill="#e6f6ac" opacity="0.9"/>
+<g filter="url(#glow)"><rect x="495" y="92" width="210" height="76" rx="18" fill="#0f1717" stroke="#92e656" stroke-width="1.4"/></g>
+<text x="600" y="124" xml:space="preserve" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="15.5" fill="#fafdee" font-weight="600" text-anchor="middle" letter-spacing="0" opacity="1">correction</text>
+<text x="600" y="150" xml:space="preserve" font-family="'Space Grotesk', -apple-system, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="12" fill="#a1b9a8" font-weight="400" text-anchor="middle" letter-spacing="0" opacity="1">一句话，存进快照</text>
+<g filter="url(#glow)"><rect x="109" y="262" width="222.79999999999998" height="76" rx="18" fill="#0f1717" stroke="#92e656" stroke-width="1.4"/></g>
+<text x="220" y="294" xml:space="preserve" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="15.5" fill="#fafdee" font-weight="600" text-anchor="middle" letter-spacing="0" opacity="1">refs/clamp/bad/5eb0</text>
+<text x="220" y="320" xml:space="preserve" font-family="'Space Grotesk', -apple-system, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="12" fill="#a1b9a8" font-weight="400" text-anchor="middle" letter-spacing="0" opacity="1">4 added lines</text>
+<g filter="url(#glow)"><rect x="875" y="262" width="210" height="76" rx="18" fill="#0f1717" stroke="#92e656" stroke-width="1.4"/></g>
+<text x="980" y="294" xml:space="preserve" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="15.5" fill="#fafdee" font-weight="600" text-anchor="middle" letter-spacing="0" opacity="1">compile</text>
+<text x="980" y="320" xml:space="preserve" font-family="'Space Grotesk', -apple-system, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="12" fill="#a1b9a8" font-weight="400" text-anchor="middle" letter-spacing="0" opacity="1">three gates before write</text>
+<g filter="url(#glow)"><rect x="85" y="622" width="210" height="76" rx="18" fill="#0f1717" stroke="#92e656" stroke-width="1.4"/></g>
+<text x="190" y="654" xml:space="preserve" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="15.5" fill="#fafdee" font-weight="600" text-anchor="middle" letter-spacing="0" opacity="1">last 40 commits</text>
+<text x="190" y="680" xml:space="preserve" font-family="'Space Grotesk', -apple-system, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="12" fill="#a1b9a8" font-weight="400" text-anchor="middle" letter-spacing="0" opacity="1">0 blocks · 0 trigger hits</text>
+<g filter="url(#glow)"><rect x="905" y="622" width="210" height="76" rx="18" fill="#0f1717" stroke="#92e656" stroke-width="1.4"/></g>
+<text x="1010" y="654" xml:space="preserve" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="15.5" fill="#fafdee" font-weight="600" text-anchor="middle" letter-spacing="0" opacity="1">git commit</text>
+<text x="1010" y="680" xml:space="preserve" font-family="'Space Grotesk', -apple-system, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="12" fill="#a1b9a8" font-weight="400" text-anchor="middle" letter-spacing="0" opacity="1">pre-commit · exit 2</text>
+<g filter="url(#glow)"><rect x="495" y="762" width="210" height="76" rx="18" fill="#0f1717" stroke="#92e656" stroke-width="1.4"/></g>
+<text x="600" y="794" xml:space="preserve" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="15.5" fill="#fafdee" font-weight="600" text-anchor="middle" letter-spacing="0" opacity="1">PreToolUse</text>
+<text x="600" y="820" xml:space="preserve" font-family="'Space Grotesk', -apple-system, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="12" fill="#a1b9a8" font-weight="400" text-anchor="middle" letter-spacing="0" opacity="1">content_check · exit 2</text>
+<g filter="url(#glow)"><rect x="410" y="408" width="380" height="104" rx="24" fill="#0f1717" stroke="#92e656" stroke-width="2"/></g>
+<text x="600" y="448" xml:space="preserve" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="21" fill="#fafdee" font-weight="700" text-anchor="middle" letter-spacing="0" opacity="1">0001-no-raw-toisostring</text>
+<text x="600" y="476" xml:space="preserve" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="13" fill="undefined" font-weight="400" text-anchor="middle" letter-spacing="0" opacity="1">trigger span src/**/*.ts</text>
+<text x="600" y="498" xml:space="preserve" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="12" fill="#a1b9a8" font-weight="400" text-anchor="middle" letter-spacing="0" opacity="1">content_check + tree_check · block</text>
+</svg>

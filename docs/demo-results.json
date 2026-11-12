@@ -1,0 +1,69 @@
+{
+  "generated_at": "2026-11-12T04:56:19.581Z",
+  "repo": "https://github.com/SuperMarioYL/clamp",
+  "version": "0.1.0",
+  "environment": "macOS 27.2.0 arm64 · node v22.23.1 · temporary git repository at /tmp/clamp-site-demo-20261112/repo",
+  "note": "Everything below was executed against the built v0.1.0 CLI (dist/cli.js) in a fresh temporary git repository that already had 40 commits (one module commit, then 39 note commits), so the baseline sample has real history to read. Commands and output are copied verbatim; a step's output excludes the trailing newline.",
+  "steps": [
+    {
+      "label": "Install the gate",
+      "command": "clamp init",
+      "output": "Clamp v0.1.0 · wrote .clamp/\npre-commit  /private/tmp/clamp-site-demo-20261112/repo/.git/hooks/pre-commit\nClaude Code  add this to settings.json so writes are checked before they happen:\n{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"Write|Edit\",\n        \"hooks\": [\n          {\n            \"type\": \"command\",\n            \"command\": \"clamp hook pre-tool-use\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+      "exit_code": 0
+    },
+    {
+      "label": "Record the bad worktree",
+      "command": "clamp fix --words \"时间别自己拼，统一用 formatDate\"",
+      "output": "snapshot refs/clamp/bad/5eb0 · 4 added lines\n  src/digest.ts:1  export function renderDigest(d: Date): string {\n  src/digest.ts:2  return \"Digest \" + d.toISOString();\n  src/digest.ts:3  }\n  src/report.ts:2  return \"Report \" + d.toISOString();\nafter fixing the code, run: clamp compile 5eb0",
+      "exit_code": 0
+    },
+    {
+      "label": "Compile and replay the candidate",
+      "command": "clamp compile 5eb0 --yes",
+      "output": "candidate 0001-no-raw-toisostring  span  src/**/*.ts  /\\.toISOString\\(\\)/\ncontent_check  /\\.toISOString\\(\\)/  (PreToolUse, before the write)\ntree_check     git grep --untracked -nE '\\.toISOString\\(\\)' -- ':(glob)src/**/*.ts'  (expect: no_match, 30s)\nreplay    fires_on_bad yes · passes_on_good yes · baseline 40 commits · 0 blocks · 0 trigger hits\nwritten   .clamp/constraints/0001-no-raw-toisostring.yaml",
+      "exit_code": 0
+    },
+    {
+      "label": "Read the stored constraint",
+      "command": "cat .clamp/constraints/0001-no-raw-toisostring.yaml",
+      "output": "id: 0001-no-raw-toisostring\nclaim: 时间别自己拼，统一用 formatDate\nenforcement: block\ntrigger:\n  kind: span\n  glob: src/**/*.ts\n  pattern: \\.toISOString\\(\\)\ncontent_check:\n  pattern: \\.toISOString\\(\\)\ntree_check:\n  cmd: git grep --untracked -nE '\\.toISOString\\(\\)' -- ':(glob)src/**/*.ts'\n  timeout_sec: 30\n  expect: no_match\nprovenance:\n  bad_ref: refs/clamp/bad/5eb0\n  good_ref: worktree\n  words: 时间别自己拼，统一用 formatDate\n  model: template\n  base: 8d1c93c3fa30254c86b261b11d9a39ef76b43a9a\n  created_at: 2026-11-12T04:55:46.902Z\nversion: 783fc9b87f68",
+      "exit_code": 0
+    },
+    {
+      "label": "Rerun the gates",
+      "command": "clamp replay 0001",
+      "output": "constraint 0001-no-raw-toisostring  version 783fc9b87f68  block\nfires_on_bad    yes  src/digest.ts:2 (+1 more)\npasses_on_good  yes\nbaseline        40 commits · 0 blocks · 0 trigger hits\nverdict         pass",
+      "exit_code": 0
+    },
+    {
+      "label": "List the stored constraints",
+      "command": "clamp list",
+      "output": "0001-no-raw-toisostring  block  span src/**/*.ts /\\.toISOString\\(\\)/  783fc9b87f68",
+      "exit_code": 0
+    },
+    {
+      "label": "Run every tree check",
+      "command": "clamp check",
+      "output": "ok · 1 tree check passed",
+      "exit_code": 0
+    },
+    {
+      "label": "Commit the corrected worktree (the gate allows it)",
+      "command": "git add -A && git commit -m \"fix: use formatDate and store the constraint\"",
+      "output": "[main 1993db6] fix: use formatDate and store the constraint\n 2 files changed, 26 insertions(+)\n create mode 100644 .clamp/constraints/0001-no-raw-toisostring.yaml\n create mode 100644 src/digest.ts",
+      "exit_code": 0
+    },
+    {
+      "label": "The same mistake again, stopped at commit time",
+      "command": "git add -A && git commit -m \"feat: weekly digest\"",
+      "output": "0001-no-raw-toisostring  blocked  src/digest.ts:2:  return \"Digest \" + d.toISOString();\n  check failed: git grep --untracked -nE '\\.toISOString\\(\\)' -- ':(glob)src/**/*.ts'\nclamp: blocked the commit (exit 2) — 1 constraint(s) refused it.\nclamp: fix the offending lines, or run `clamp fix --words \"...\"` if the rule itself is wrong.",
+      "exit_code": 1
+    },
+    {
+      "label": "The same mistake again, stopped before the write",
+      "command": "printf '%s\\n' '{\"tool_name\":\"Write\",\"cwd\":\"/tmp/clamp-site-demo-20261112/repo\",\"tool_input\":{\"file_path\":\"src/digest.ts\",\"content\":\"export function renderDigest(d: Date): string {\\n  return \\\"Digest \\\" + d.toISOString();\\n}\\n\"}}' | clamp hook pre-tool-use",
+      "output": "clamp: 0001-no-raw-toisostring  src/digest.ts:2  content_check /\\.toISOString\\(\\)/ matched \"return \"Digest \" + d.toISOString();\"\nclamp: blocked this write (exit 2) — 1 constraint refused it.\nclamp: rewrite the offending line, or record a new correction with `clamp fix --words \"...\"` and `clamp compile <id>`.",
+      "exit_code": 2
+    }
+  ]
+}
